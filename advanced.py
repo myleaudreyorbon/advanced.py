@@ -50,63 +50,21 @@ def relationship_status(from_member, to_member, social_graph):
     # Stay within the function. Only use the parameters as input. The function should return your answer.
 
 def relationship_status(from_member, to_member, social_graph):
-    following_from_member = social_graph.get(from_member, {}).get("following", [])
-    following_to_member = social_graph.get(to_member, {}).get("following", [])
+    following_from_member = social_graph.get(from_member, {}).get('following', [])
+    following_to_member = social_graph.get(to_member, {}).get('following', [])
 
     # Check if from_member follows to_member
     if to_member in following_from_member:
         # Check if to_member also follows from_member
         if from_member in following_to_member:
-            return "friends"
+            return 'friends'
         else:
-            return "follower"
+            return 'follower'
     # Check if to_member follows from_member
     elif from_member in following_to_member:
-        return "followed by"
+        return 'followed by'
     else:
-        return "no relationship"
-
-social_graph = {
-"@bongolpoc":{"first_name":"Joselito",
-                "last_name":"Olpoc",
-                "following":[
-                ]
-},
-"@joaquin":  {"first_name":"Joaquin",
-                "last_name":"Gonzales",
-                "following":[
-                    "@chums","@jobenilagan"
-                ]
-},
-"@chums" : {"first_name":"Matthew",
-            "last_name":"Uy",
-            "following":[
-                "@bongolpoc","@miketan","@rudyang","@joeilagan"
-            ]
-},
-"@jobenilagan":{"first_name":"Joben",
-                "last_name":"Ilagan",
-            "following":[
-                "@eeebeee","@joeilagan","@chums","@joaquin"
-                ]
-},
-"@joeilagan":{"first_name":"Joe",
-                "last_name":"Ilagan",
-                "following":[
-                "@eeebeee","@jobenilagan","@chums"
-                ]
-},
-"@eeebeee":  {"first_name":"Elizabeth",
-                "last_name":"Ilagan",
-                "following":[
-                "@jobenilagan","@joeilagan"
-                ]
-},
-}
-
-from_member = "@joaquin"
-to_member = "@jobenilagan"
-print(relationship_status(from_member, to_member, social_graph))
+        return 'no relationship'
 
 
 def tic_tac_toe(board):
@@ -135,73 +93,28 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
+
 def tic_tac_toe(board):
-    # Check rows, columns, and diagonals for a winner
-    for i in range(len(board)):
-        # Check rows
-        if len(set(board[i])) == 1 and board[i][0] != "-":
-            return board[i][0]
-        # Check columns
-        if len(set(row[i] for row in board)) == 1 and board[0][i] != "-":
-            return board[0][i]
-    
+    # Check rows
+    for row in board:
+        if len(set(row)) == 1 and row[0] != '':
+            return row[0]
+
+    # Check columns
+    for col in range(len(board)):
+        if len(set([board[row][col] for row in range(len(board))])) == 1 and board[0][col] != '':
+            return board[0][col]
+
     # Check diagonals
-    if len(set(board[i][i] for i in range(len(board)))) == 1 and board[0][0] != "-":
-        return board[0][0]
-    if len(set(board[i][len(board) - 1 - i] for i in range(len(board)))) == 1 and board[0][len(board) - 1] != "-":
-        return board[0][len(board) - 1]
-    
-    return "NO WINNER"
+    diagonal1 = [board[i][i] for i in range(len(board))]
+    diagonal2 = [board[i][len(board)-1-i] for i in range(len(board))]
+    if len(set(diagonal1)) == 1 and diagonal1[0] != '':
+        return diagonal1[0]
+    if len(set(diagonal2)) == 1 and diagonal2[0] != '':
+        return diagonal2[0]
 
-# Sample tic-tac-toe boards
-board1 = [
-['X','X','O'],
-['O','X','O'],
-['O','','X'],
-]
-
-board2 = [
-['X','X','O'],
-['O','X','O'],
-['','O','X'],
-]
-
-board3 = [
-['O','X','O'],
-['','O','X'],
-['X','X','O'],
-]
-
-board4 = [
-['X','X','X'],
-['O','X','O'],
-['O','','O'],
-]
-
-board5 = [
-['X','X','O'],
-['O','X','O'],
-['X','','O'],
-]
-
-board6 = [
-['X','X','O'],
-['O','X','O'],
-['X','',''],
-]
-
-board7 = [
-['X','X','O',''],
-['O','X','O','O'],
-['X','','','O'],
-['O','X','','']
-]
-
-# Example usage
-print(tic_tac_toe(board1))
-print(tic_tac_toe(board2))
-print(tic_tac_toe(board3))
-
+    # No winner
+    return 'NO WINNER'
 
 def eta(first_stop, second_stop, route_map):
     '''ETA.
@@ -234,6 +147,7 @@ def eta(first_stop, second_stop, route_map):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
+
 def eta(first_stop, second_stop, route_map):
     total_time = 0
     current_stop = first_stop
@@ -258,20 +172,3 @@ def eta(first_stop, second_stop, route_map):
             return -1
 
     return total_time
-
-# Example usage:
-route_map = {
-     ("upd","admu"):{
-         "travel_time_mins":10
-     },
-     ("admu","dlsu"):{
-         "travel_time_mins":35
-     },
-     ("dlsu","upd"):{
-         "travel_time_mins":55
-     }
-}
-
-first_stop = "admu"
-second_stop = "upd"
-print(eta(first_stop, second_stop, route_map))
